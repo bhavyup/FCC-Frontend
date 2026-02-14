@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Folio — Markdown Editor</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='3' width='20' height='26' rx='3' fill='%23c8875e'/%3E%3Cpath d='M12 10h8M12 15h8M12 20h5' stroke='%230b0b0a' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="brand">folio</span>
+        <span class="sep" aria-hidden="true">/</span>
+        <span class="doc-name" id="doc-name">untitled.md</span>
+      </div>
+      <div class="topbar-right">
+        <div class="sync-dot" id="sync-dot" title="Preview synced"></div>
+        <button class="icon-btn" id="clear-btn" title="Clear editor" aria-label="Clear editor">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="copy-btn" title="Copy markdown" aria-label="Copy markdown">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="download-btn" title="Download .md" aria-label="Download markdown">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="pane pane--editor">
+        <div class="pane-label">
+          <span class="label-dot"></span>
+          Markdown
+        </div>
+        <textarea id="editor" spellcheck="false" placeholder="Start writing..."></textarea>
+      </section>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <section class="pane pane--preview">
+        <div class="pane-label">
+          <span class="label-dot label-dot--live"></span>
+          Preview
+        </div>
+        <article id="preview" class="prose"></article>
+      </section>
+    </main>
+
+    <footer class="statusbar">
+      <div class="statusbar-left">
+        <span class="stat"><kbd>Ctrl+S</kbd> save</span>
+        <span class="stat-sep" aria-hidden="true">&middot;</span>
+        <span class="stat" id="word-stat">0 words</span>
+        <span class="stat-sep" aria-hidden="true">&middot;</span>
+        <span class="stat" id="char-stat">0 chars</span>
+        <span class="stat-sep" aria-hidden="true">&middot;</span>
+        <span class="stat" id="line-stat">0 lines</span>
+      </div>
+      <div class="statusbar-center">
+        <span class="credit">made with <span class="credit-heart">&hearts;</span> by Bhavy Upreti</span>
+      </div>
+      <div class="statusbar-right">
+        <button id="load-tests" class="fcc-link">FCC Tests</button>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
