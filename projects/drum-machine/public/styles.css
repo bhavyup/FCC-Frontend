@@ -1,0 +1,440 @@
+/* ============================================
+   Volt — Drum Machine
+   Full viewport. Asymmetric. Pads own the screen.
+   ============================================ */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #101010;
+  --sidebar-bg: #141414;
+  --pad-bg: #1a1a1a;
+  --pad-bg-hover: #212121;
+  --pad-bg-active: #151515;
+
+  --text: #e8e4dc;
+  --text-dim: #8a857b;
+  --text-faint: #4a473f;
+  --text-ghost: #2a2825;
+
+  --accent: #d4654a;
+  --accent-soft: rgba(212, 101, 74, 0.12);
+  --accent-ring: rgba(212, 101, 74, 0.4);
+
+  --border: #222;
+  --radius: 10px;
+  --radius-sm: 6px;
+
+  --sidebar-w: 260px;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══════════════ MACHINE (root) ══════════════ */
+
+.machine {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+}
+
+/* ══════════════ SIDEBAR ══════════════ */
+
+.sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 32px 24px 20px;
+  gap: 0;
+  overflow-y: auto;
+}
+
+.sidebar-top {
+  margin-bottom: 48px;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: var(--accent);
+  line-height: 1;
+  margin: 0;
+}
+
+.brand-tag {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--text-faint);
+  margin-top: 6px;
+}
+
+.sidebar-middle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ── Display ── */
+
+.display-block,
+.control-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.display-label,
+.control-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-faint);
+  font-weight: 500;
+}
+
+.display-screen {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background: var(--bg);
+  border: 1px solid var(--text-ghost);
+  border-radius: var(--radius-sm);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  overflow: hidden;
+  white-space: nowrap;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.display-screen.flash {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(212, 101, 74, 0.08);
+}
+
+/* ── Volume ── */
+
+.vol-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vol-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 3px;
+  background: var(--text-ghost);
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+}
+
+.vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--text-dim);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.vol-slider::-webkit-slider-thumb:hover {
+  background: var(--text);
+  transform: scale(1.15);
+}
+
+.vol-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--text-dim);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.vol-num {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-faint);
+  min-width: 22px;
+  text-align: right;
+}
+
+/* ── Stats ── */
+
+.stat-row {
+  display: flex;
+  gap: 24px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.stat-unit {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-faint);
+}
+
+/* ── Sidebar Bottom ── */
+
+.sidebar-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--text-ghost);
+  margin-top: auto;
+}
+
+.credit {
+  font-size: 0.8rem;
+  color: var(--text-ghost);
+  letter-spacing: 0.3px;
+  transition: color 0.3s;
+}
+
+.credit:hover {
+  color: var(--text-faint);
+}
+
+.heart {
+  color: var(--accent);
+  display: inline-block;
+  animation: heartbeat 2.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.25); }
+  30% { transform: scale(1); }
+}
+
+.fcc-btn {
+  background: none;
+  border: 1px solid var(--text-ghost);
+  color: var(--text-faint);
+  font-size: 0.6rem;
+  font-family: inherit;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.fcc-btn:hover {
+  color: var(--text-dim);
+  border-color: var(--text-faint);
+}
+
+/* ══════════════ STAGE (PAD AREA) ══════════════ */
+
+.stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--bg);
+}
+
+.pad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+  max-width: 720px;
+  max-height: 720px;
+}
+
+/* ══════════════ DRUM PAD ══════════════ */
+
+.drum-pad {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--pad-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  overflow: hidden;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  line-height: 1;
+  transition:
+    background 0.06s ease,
+    border-color 0.15s ease,
+    transform 0.06s ease,
+    box-shadow 0.15s ease,
+    color 0.1s ease;
+}
+
+/* Sample name via CSS ::after — keeps innerText clean for FCC */
+.drum-pad::after {
+  content: attr(data-name);
+  position: absolute;
+  bottom: 14px;
+  font-size: 0.55rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-ghost);
+  pointer-events: none;
+  transition: color 0.15s ease;
+}
+
+.drum-pad:hover {
+  background: var(--pad-bg-hover);
+  color: var(--text-dim);
+}
+
+.drum-pad:hover::after {
+  color: var(--text-faint);
+}
+
+.drum-pad:focus-visible {
+  border-color: var(--accent);
+}
+
+/* ── Active state ── */
+
+.drum-pad.active {
+  background: var(--pad-bg-active);
+  transform: scale(0.97);
+  border-color: rgba(212, 101, 74, 0.3);
+  color: var(--accent);
+}
+
+.drum-pad.active::after {
+  color: var(--text-faint);
+}
+
+/* ══════════════ TOAST ══════════════ */
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  padding: 7px 18px;
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ══════════════ RESPONSIVE ══════════════ */
+
+@media (max-width: 700px) {
+  .machine {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 18px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sidebar-top {
+    margin-bottom: 0;
+  }
+
+  .brand { font-size: 1.2rem; letter-spacing: 4px; }
+  .brand-tag { display: none; }
+
+  .sidebar-middle {
+    flex-direction: row;
+    gap: 16px;
+    flex-wrap: wrap;
+    flex: 1;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .display-block { flex-direction: row; align-items: center; gap: 10px; }
+  .display-label { display: none; }
+  .display-screen { height: 40px; font-size: 0.85rem; min-width: 120px; }
+
+  .control-block:last-child { display: none; }
+  .control-label { display: none; }
+
+  .vol-row { min-width: 100px; }
+
+  .sidebar-bottom { display: none; }
+
+  .stage { padding: 14px; }
+
+  .pad-key { font-size: 1.3rem; }
+  .pad-name { font-size: 0.5rem; }
+
+  .pad-grid { gap: 8px; max-height: none; }
+}

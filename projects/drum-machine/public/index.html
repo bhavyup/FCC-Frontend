@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volt — Drum Machine</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='4' width='24' height='24' rx='4' fill='%23d4654a'/%3E%3Crect x='9' y='9' width='6' height='6' rx='1' fill='%230c0c0b'/%3E%3Crect x='17' y='9' width='6' height='6' rx='1' fill='%230c0c0b'/%3E%3Crect x='9' y='17' width='6' height='6' rx='1' fill='%230c0c0b'/%3E%3Crect x='17' y='17' width='6' height='6' rx='1' fill='%230c0c0b'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="drum-machine" class="machine">
+
+    <!-- ── Left: Control Panel ── -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="brand-row">
+          <h1 class="brand">VOLT</h1>
+          <button id="load-tests" class="fcc-btn">FCC Tests</button>
+        </div>
+        <p class="brand-tag">drum machine</p>
+      </div>
+
+      <div class="sidebar-middle">
+        <div class="display-block">
+          <span class="display-label">Now Playing</span>
+          <div class="display-screen" id="display">&mdash;</div>
+        </div>
+
+        <div class="control-block">
+          <span class="control-label">Volume</span>
+          <div class="vol-row">
+            <input type="range" id="volume" class="vol-slider" min="0" max="100" value="75" aria-label="Volume">
+            <span class="vol-num" id="vol-value">75</span>
+          </div>
+        </div>
+
+        <div class="control-block">
+          <span class="control-label">Session</span>
+          <div class="stat-row">
+            <div class="stat-item">
+              <span class="stat-value" id="hit-count">0</span>
+              <span class="stat-unit">hits</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="bpm-display">—</span>
+              <span class="stat-unit">bpm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <span class="credit">made with <span class="heart">&hearts;</span> by Bhavy Upreti</span>
+      </div>
+    </aside>
+
+    <!-- ── Right: Pad Grid ── -->
+    <main class="stage">
+      <div class="pad-grid">
+        <button class="drum-pad" id="Heater-1" data-name="Heater 1">Q<audio class="clip" id="Q" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3" preload="auto"></audio></button>
+        <button class="drum-pad" id="Heater-2" data-name="Heater 2">W<audio class="clip" id="W" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3" preload="auto"></audio></button>
+        <button class="drum-pad" id="Heater-3" data-name="Heater 3">E<audio class="clip" id="E" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3" preload="auto"></audio></button>
+        <button class="drum-pad" id="Heater-4" data-name="Heater 4">A<audio class="clip" id="A" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3" preload="auto"></audio></button>
+        <button class="drum-pad" id="Clap" data-name="Clap">S<audio class="clip" id="S" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3" preload="auto"></audio></button>
+        <button class="drum-pad" id="Open-HH" data-name="Open HH">D<audio class="clip" id="D" src="https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3" preload="auto"></audio></button>
+        <button class="drum-pad" id="Kick-n-Hat" data-name="Kick n' Hat">Z<audio class="clip" id="Z" src="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3" preload="auto"></audio></button>
+        <button class="drum-pad" id="Kick" data-name="Kick">X<audio class="clip" id="X" src="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3" preload="auto"></audio></button>
+        <button class="drum-pad" id="Closed-HH" data-name="Closed HH">C<audio class="clip" id="C" src="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3" preload="auto"></audio></button>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
