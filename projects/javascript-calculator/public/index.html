@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Equal — Calculator</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%236d9775'/%3E%3Crect x='8' y='11' width='16' height='2.5' rx='1' fill='%23090909'/%3E%3Crect x='8' y='18.5' width='16' height='2.5' rx='1' fill='%23090909'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Mobile top-bar (hidden on desktop) -->
+  <header class="topbar">
+    <span class="topbar-logo">EQUAL</span>
+    <div class="topbar-right">
+      <span class="topbar-count" id="topbar-count">0</span>
+      <button class="topbar-toggle" id="tape-toggle" title="History">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="overlay" id="overlay"></div>
+
+  <div class="app">
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="sidebar" id="sidebar">
+      <header class="brand">
+        <div class="brand-row">
+          <h1 class="logo">EQUAL</h1>
+          <span class="logo-badge">=</span>
+        </div>
+        <div class="brand-bar"></div>
+        <p class="tagline">precision arithmetic</p>
+      </header>
+
+      <div class="tape">
+        <div class="tape-head">
+          <span class="tape-title">HISTORY</span>
+          <span class="tape-count" id="calc-count">0</span>
+        </div>
+        <ul class="tape-list" id="tape-list">
+          <li class="tape-empty" id="tape-empty">No calculations yet</li>
+        </ul>
+        <button class="tape-clear" id="tape-clear">Clear History</button>
+      </div>
+
+      <footer class="sidebar-foot">
+        <div class="shortcuts">
+          <div class="sc-row"><kbd>0–9</kbd><span>numbers</span></div>
+          <div class="sc-row"><kbd>+ − × ÷</kbd><span>operators</span></div>
+          <div class="sc-row"><kbd>Enter</kbd><span>evaluate</span></div>
+          <div class="sc-row"><kbd>Esc</kbd><span>clear</span></div>
+          <div class="sc-row"><kbd>⌫</kbd><span>delete</span></div>
+        </div>
+        <div class="foot-row">
+          <span class="credit">made with <span class="heart">&hearts;</span> by Bhavy Upreti</span>
+          <button id="load-tests" class="fcc-btn">FCC Tests</button>
+        </div>
+      </footer>
+    </aside>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="main">
+      <section class="screen">
+        <div class="formula" id="formula"></div>
+        <div class="result" id="display">0</div>
+      </section>
+
+      <section class="keys" id="keys">
+        <button id="clear"    class="key key--fn"    data-action="clear">AC</button>
+        <button id="divide"   class="key key--op"    data-action="op" data-op="/">÷</button>
+        <button id="multiply" class="key key--op"    data-action="op" data-op="*">×</button>
+        <button id="subtract" class="key key--op"    data-action="op" data-op="-">−</button>
+
+        <button id="seven"    class="key"            data-action="num" data-num="7">7</button>
+        <button id="eight"    class="key"            data-action="num" data-num="8">8</button>
+        <button id="nine"     class="key"            data-action="num" data-num="9">9</button>
+        <button id="add"      class="key key--op"    data-action="op"  data-op="+">+</button>
+
+        <button id="four"     class="key"            data-action="num" data-num="4">4</button>
+        <button id="five"     class="key"            data-action="num" data-num="5">5</button>
+        <button id="six"      class="key"            data-action="num" data-num="6">6</button>
+
+        <button id="equals"   class="key key--eq"    data-action="eval">=</button>
+
+        <button id="one"      class="key"            data-action="num" data-num="1">1</button>
+        <button id="two"      class="key"            data-action="num" data-num="2">2</button>
+        <button id="three"    class="key"            data-action="num" data-num="3">3</button>
+
+        <button id="zero"     class="key key--zero"  data-action="num" data-num="0">0</button>
+        <button id="decimal"  class="key"            data-action="dec">.</button>
+      </section>
+    </main>
+
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
