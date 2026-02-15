@@ -1,0 +1,499 @@
+/* ============================================
+   ATMOS — Atmospheric Weather Canvas
+   Full-viewport immersive weather experience.
+   Dynamic gradients. CSS weather particles.
+   ============================================ */
+
+*, *::before, *::after {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+
+:root {
+  /* Base palette — overridden dynamically by JS */
+  --grad-top:    #1a1a2e;
+  --grad-mid:    #16213e;
+  --grad-bot:    #0f3460;
+  --accent:      #e8734a;
+  --accent-dim:  rgba(232, 115, 74, 0.25);
+  --glass:       rgba(255, 255, 255, 0.06);
+  --glass-border:rgba(255, 255, 255, 0.08);
+  --text:        #f0ece4;
+  --text-mid:    rgba(255, 255, 255, 0.65);
+  --text-dim:    rgba(255, 255, 255, 0.555);
+  --text-faint:  rgba(255, 255, 255, 0.363);
+}
+
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══════════════ CANVAS (full viewport) ══════════════ */
+
+.canvas {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--grad-top), var(--grad-mid) 45%, var(--grad-bot));
+  transition: --grad-top 1.2s ease, --grad-mid 1.2s ease, --grad-bot 1.2s ease;
+  /* Fallback for browsers that don't support @property */
+  transition: background 1.2s ease;
+}
+
+/* Subtle grain overlay */
+.canvas::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ══════════════ PARTICLES ══════════════ */
+
+.particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Rain drops */
+.rain-drop {
+  position: absolute;
+  top: -20px;
+  width: 1.5px;
+  height: 18px;
+  background: linear-gradient(transparent, rgba(200, 220, 255, 0.35));
+  border-radius: 0 0 2px 2px;
+  animation: rainFall linear infinite;
+}
+
+@keyframes rainFall {
+  0%   { transform: translateY(0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* Snow flakes */
+.snow-flake {
+  position: absolute;
+  top: -10px;
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: snowFall linear infinite;
+}
+
+@keyframes snowFall {
+  0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.8; }
+  50%  { transform: translateY(50vh) translateX(25px) rotate(180deg); }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(100vh) translateX(-10px) rotate(360deg); opacity: 0; }
+}
+
+/* Floating clouds */
+.cloud-puff {
+  position: absolute;
+  top: 10%;
+  width: 180px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 50px;
+  filter: blur(20px);
+  animation: cloudDrift linear infinite;
+}
+
+@keyframes cloudDrift {
+  0%   { transform: translateX(-200px); }
+  100% { transform: translateX(calc(100vw + 200px)); }
+}
+
+/* Sun rays */
+.sun-ray {
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 220, 100, 0.12), transparent 65%);
+  animation: sunPulse 4s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50%      { transform: scale(1.15); opacity: 1; }
+}
+
+/* Mist */
+.mist-layer {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 120%;
+  height: 30vh;
+  background: linear-gradient(transparent, rgba(200, 200, 210, 0.08));
+  animation: mistDrift 12s ease-in-out infinite alternate;
+}
+
+@keyframes mistDrift {
+  0%   { transform: translateX(-3%); }
+  100% { transform: translateX(3%); }
+}
+
+/* ══════════════ TOPBAR ══════════════ */
+
+.topbar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  flex-shrink: 0;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: 5px;
+  color: var(--text);
+  line-height: 1;
+}
+
+.logo-sep {
+  width: 1px;
+  height: 26px;
+  background: var(--text-faint);
+}
+
+.logo-sub {
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+}
+
+/* Unit toggle */
+.unit-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 14px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.unit-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.unit-opt {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  transition: color 0.2s ease;
+}
+
+.unit-opt.active {
+  color: var(--text);
+}
+
+.unit-slash {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+}
+
+/* ══════════════ HERO ══════════════ */
+
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  padding: 0 32px;
+}
+
+/* ── Loading ── */
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.loading-ring {
+  width: 40px;
+  height: 40px;
+  border: 2.5px solid var(--text-faint);
+  border-top-color: var(--text);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-mid);
+  letter-spacing: 0.5px;
+}
+
+/* ── Weather Content ── */
+
+.weather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  animation: weatherIn 0.6s ease;
+}
+
+@keyframes weatherIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Location */
+.location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.loc-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-mid);
+}
+
+.loc-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-mid);
+  letter-spacing: 0.5px;
+}
+
+/* Temperature */
+.temp-wrap {
+  display: flex;
+  align-items: flex-start;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.temp {
+  font-size: clamp(6rem, 18vw, 14rem);
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -4px;
+  line-height: 0.9;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  transition: opacity 0.2s ease;
+}
+
+.temp-unit {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 300;
+  color: var(--text-mid);
+  margin-top: 0.6em;
+  margin-left: 4px;
+}
+
+/* Condition */
+.condition {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.cond-icon {
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+}
+
+.cond-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-mid);
+  text-transform: capitalize;
+}
+
+/* Detail strip (glassmorphism) */
+.details {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 28px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.detail-val {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.detail-key {
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.detail-sep {
+  width: 1px;
+  height: 28px;
+  background: var(--text-faint);
+}
+
+/* ── Error ── */
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.error-text {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+}
+
+.error-retry {
+  padding: 10px 24px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.15s ease;
+}
+
+.error-retry:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ══════════════ FOOTER ══════════════ */
+
+.foot {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 32px;
+  flex-shrink: 0;
+}
+
+.credit {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  letter-spacing: 0.3px;
+  transition: color 0.3s;
+}
+.credit:hover { color: var(--text-dim); }
+
+.heart {
+  color: var(--accent);
+  display: inline-block;
+  animation: heartPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); }
+  15%      { transform: scale(1.25); }
+  30%      { transform: scale(1); }
+}
+
+.foot-sep {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-faint);
+}
+
+.foot-source {
+  font-size: 0.6rem;
+  color: var(--text-faint);
+  letter-spacing: 0.3px;
+}
+
+/* ══════════════ RESPONSIVE ══════════════ */
+
+@media (max-width: 600px) {
+  .topbar { padding: 18px 20px; }
+  .hero { padding: 0 20px; }
+  .details { gap: 14px; padding: 14px 20px; }
+  .detail-val { font-size: 0.75rem; }
+  .temp { letter-spacing: -2px; }
+  .foot { padding: 12px 20px; }
+  .logo-sub { display: none; }
+  .logo-sep { display: none; }
+}
+
+@media (max-width: 420px) {
+  .details { gap: 10px; padding: 12px 14px; }
+  .detail-val { font-size: 0.7rem; }
+  .detail-key { font-size: 0.42rem; }
+  .cond-icon { width: 36px; height: 36px; }
+}
+
+@media (max-height: 580px) {
+  .temp { font-size: 5rem; }
+  .condition { margin-bottom: 18px; }
+  .details { padding: 10px 18px; }
+}

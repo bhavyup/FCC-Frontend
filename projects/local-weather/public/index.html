@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atmos — Local Weather</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23e8734a'/%3E%3Ccircle cx='16' cy='14' r='6' fill='none' stroke='%23ffeedd' stroke-width='2'/%3E%3Cpath d='M8 24c0-3 3-5 8-5s8 2 8 5' fill='none' stroke='%23ffeedd' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="canvas" id="canvas">
+
+    <!-- Weather particles layer -->
+    <div class="particles" id="particles"></div>
+
+    <!-- ═══ TOP BAR ═══ -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="logo">ATMOS</h1>
+        <span class="logo-sep"></span>
+        <span class="logo-sub">local weather</span>
+      </div>
+      <div class="topbar-right">
+        <button class="unit-toggle" id="unit-toggle" title="Toggle °F / °C">
+          <span class="unit-opt" id="unit-c">°C</span>
+          <span class="unit-slash">/</span>
+          <span class="unit-opt active" id="unit-f">°F</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ═══ HERO — the temperature experience ═══ -->
+    <main class="hero" id="hero">
+
+      <!-- Loading state -->
+      <div class="loading" id="loading">
+        <div class="loading-ring"></div>
+        <p class="loading-text">Detecting your location…</p>
+      </div>
+
+      <!-- Weather content (hidden until loaded) -->
+      <div class="weather" id="weather" style="display:none;">
+
+        <!-- Location -->
+        <div class="location">
+          <svg class="loc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span class="loc-name" id="loc-name">—</span>
+        </div>
+
+        <!-- Temperature -->
+        <div class="temp-wrap">
+          <span class="temp" id="temp">—</span>
+          <span class="temp-unit" id="temp-unit">°F</span>
+        </div>
+
+        <!-- Condition -->
+        <div class="condition">
+          <img class="cond-icon" id="cond-icon" src="" alt="" width="48" height="48">
+          <span class="cond-text" id="cond-text">—</span>
+        </div>
+
+        <!-- Detail strip -->
+        <div class="details">
+          <div class="detail">
+            <span class="detail-val" id="d-feels">—</span>
+            <span class="detail-key">feels like</span>
+          </div>
+          <div class="detail-sep"></div>
+          <div class="detail">
+            <span class="detail-val" id="d-humidity">—</span>
+            <span class="detail-key">humidity</span>
+          </div>
+          <div class="detail-sep"></div>
+          <div class="detail">
+            <span class="detail-val" id="d-wind">—</span>
+            <span class="detail-key">wind</span>
+          </div>
+          <div class="detail-sep"></div>
+          <div class="detail">
+            <span class="detail-val" id="d-pressure">—</span>
+            <span class="detail-key">pressure</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Error state -->
+      <div class="error" id="error" style="display:none;">
+        <p class="error-text" id="error-text">Unable to get weather data.</p>
+        <button class="error-retry" id="error-retry">Try Again</button>
+      </div>
+
+    </main>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="foot">
+      <span class="credit">Made with <span class="heart">&hearts;</span> by Bhavy Upreti</span>
+      <span class="foot-sep"></span>
+      <span class="foot-source">powered by freeCodeCamp Weather API</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

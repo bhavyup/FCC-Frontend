@@ -9,7 +9,8 @@ const projects = [
   'markdown-previewer',
   'drum-machine',
   'javascript-calculator',
-  'pomodoro-clock'
+  'pomodoro-clock',
+  'local-weather'
 ];
 
 projects.forEach(project => {
