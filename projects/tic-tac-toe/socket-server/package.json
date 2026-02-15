@@ -1,0 +1,15 @@
+{
+  "name": "duel-socket-server",
+  "version": "1.0.0",
+  "description": "Socket.io server for DUEL — Tic Tac Toe online PvP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "socket.io": "^4.7.5"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
