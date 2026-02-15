@@ -253,8 +253,8 @@
 
   // Local dev → same origin; GitHub Pages → Render server
   const SOCKET_URL = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
-    ? undefined                                              // same-origin (local Express)
-    : 'https://YOUR_APP_NAME.onrender.com';                  // ← replace after Render deploy
+    ? undefined                                              
+    : 'https://tictactoe-duel-socket.onrender.com';
 
   function connectSocket() {
     if (socket) return;
