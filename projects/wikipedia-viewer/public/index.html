@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seek — Wikipedia Search</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231d4ed8'/%3E%3Ccircle cx='14' cy='14' r='6' fill='none' stroke='%23fff' stroke-width='2'/%3E%3Cline x1='18.5' y1='18.5' x2='23' y2='23' stroke='%23fff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- ═══ HEADER BAR ═══ -->
+    <header class="bar">
+      <div class="bar-left">
+        <h1 class="brand">SEEK</h1>
+        <span class="brand-sep">/</span>
+        <span class="brand-sub">wikipedia</span>
+      </div>
+      <div class="bar-right">
+        <kbd class="kbd-hint" id="kbd-hint" title="Press / to focus search">/</kbd>
+        <a class="random-btn" id="random-btn" href="https://en.wikipedia.org/wiki/Special:Random" target="_blank" rel="noopener noreferrer">
+          Random
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3"/><path d="M6 3h7v7"/></svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- ═══ SEARCH AREA ═══ -->
+    <div class="search-area">
+      <div class="search-box" id="search-box">
+        <svg class="search-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="9" r="6.5"/>
+          <line x1="14" y1="14" x2="18" y2="18"/>
+        </svg>
+        <input
+          type="text"
+          id="search-input"
+          class="search-input"
+          placeholder="Search the encyclopedia..."
+          autocomplete="off"
+          spellcheck="false"
+          autofocus
+        >
+        <button class="clear-btn" id="clear-btn" aria-label="Clear search">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="4" y1="4" x2="12" y2="12"/><line x1="12" y1="4" x2="4" y2="12"/></svg>
+        </button>
+      </div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- ═══ MAIN CONTENT ═══ -->
+    <main class="main" id="main">
+
+      <!-- Welcome / idle state -->
+      <section class="welcome" id="welcome">
+
+        <!-- Quick-search pills -->
+        <div class="welcome-top">
+          <div class="suggestions" id="suggestions">
+            <button class="pill" data-q="Quantum physics">Quantum physics</button>
+            <button class="pill" data-q="Renaissance art">Renaissance art</button>
+            <button class="pill" data-q="Deep ocean">Deep ocean</button>
+            <button class="pill" data-q="Space exploration">Space exploration</button>
+            <button class="pill" data-q="Ancient Rome">Ancient Rome</button>
+            <button class="pill" data-q="Neural networks">Neural networks</button>
+          </div>
+        </div>
+
+        <!-- Featured Article (big hero card) -->
+        <div class="discover" id="discover">
+          <div class="discover-loading" id="discover-loading">
+            <div class="skel-featured"></div>
+            <div class="skel-grid">
+              <div class="skel-card"></div>
+              <div class="skel-card"></div>
+              <div class="skel-card"></div>
+              <div class="skel-card"></div>
+            </div>
+          </div>
+
+          <!-- Featured article of the day -->
+          <div class="featured" id="featured" style="display:none;"></div>
+
+          <!-- Most-read articles grid -->
+          <div class="section-head" id="mostread-head" style="display:none;">
+            <span class="section-label">Trending now</span>
+            <span class="section-line"></span>
+          </div>
+          <div class="mostread-grid" id="mostread-grid" style="display:none;"></div>
+
+          <!-- On This Day -->
+          <div class="section-head" id="onthisday-head" style="display:none;">
+            <span class="section-label">On this day</span>
+            <span class="section-line"></span>
+          </div>
+          <div class="onthisday" id="onthisday" style="display:none;"></div>
+        </div>
+
+        <p class="welcome-hint">press <kbd>/</kbd> to search · <kbd>Enter</kbd> to go · click any card to read</p>
+      </section>
+
+      <!-- Results -->
+      <section class="results-wrap" id="results-wrap">
+        <div class="results-bar">
+          <span class="results-meta" id="results-meta"></span>
+          <button class="results-clear" id="results-clear">Clear results</button>
+        </div>
+        <div class="results" id="results"></div>
+      </section>
+
+      <!-- No results -->
+      <section class="no-results" id="no-results">
+        <p class="no-results-icon">∅</p>
+        <p class="no-results-text" id="no-results-text">No articles found.</p>
+        <p class="no-results-hint">Try a different search term</p>
+      </section>
+
+      <!-- Error -->
+      <section class="error-state" id="error-state">
+        <p class="error-icon">!</p>
+        <p class="error-text" id="error-text">Something went wrong.</p>
+        <button class="error-retry" id="error-retry">Try again</button>
+      </section>
+
+    </main>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="foot">
+      <span class="credit">Made with <span class="heart">&hearts;</span> by Bhavy Upreti</span>
+      <span class="foot-dot"></span>
+      <span class="foot-api">Powered by MediaWiki API</span>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

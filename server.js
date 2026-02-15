@@ -11,7 +11,8 @@ const projects = [
   'javascript-calculator',
   'pomodoro-clock',
   'local-weather',
-  'twitch-tv'
+  'twitch-tv',
+  'wikipedia-viewer'
 ];
 
 projects.forEach(project => {
