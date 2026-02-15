@@ -1,165 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Duel — Tic Tac Toe</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23101014'/%3E%3Cline x1='10' y1='10' x2='22' y2='22' stroke='%23e8a87c' stroke-width='2.5' stroke-linecap='round'/%3E%3Cline x1='22' y1='10' x2='10' y2='22' stroke='%23e8a87c' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duel — Tic Tac Toe</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23101014'/%3E%3Cline x1='10' y1='10' x2='22' y2='22' stroke='%23e8a87c' stroke-width='2.5' stroke-linecap='round'/%3E%3Cline x1='22' y1='10' x2='10' y2='22' stroke='%23e8a87c' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-  <div class="app" id="app" data-turn="X" data-mode="cpu">
+    <div class="app" id="app" data-turn="X" data-mode="cpu">
 
-    <!-- ═══ SIDEBAR ═══ -->
-    <aside class="sidebar">
-      <div class="sb-brand">
-        <h1 class="brand">DUEL</h1>
-        <span class="brand-tag">tic tac toe</span>
-      </div>
+        <!-- ═══ SIDEBAR ═══ -->
+        <aside class="sidebar">
+            <div class="sb-brand">
+                <h1 class="brand">DUEL</h1>
+                <span class="brand-sep">/</span>
+                <span class="brand-tag">tic tac toe</span>
+            </div>
 
-      <!-- Mode selector -->
-      <div class="sb-section">
-        <span class="sb-label">MODE</span>
-        <div class="mode-btns" id="mode-btns">
-          <button class="mode-btn active" data-mode="cpu">
-            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="12" height="12" rx="2"/><circle cx="7.5" cy="9" r="1.2"/><circle cx="10.5" cy="9" r="1.2"/></svg>
-            vs CPU
-          </button>
-          <button class="mode-btn" data-mode="local">
-            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6.5" cy="6" r="2.5"/><circle cx="11.5" cy="6" r="2.5"/><path d="M1 16c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
-            vs Local
-          </button>
-          <button class="mode-btn" data-mode="online">
-            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="4" r="2.5"/><path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M14 2l2 2-2 2"/></svg>
-            vs Online
-          </button>
-        </div>
-      </div>
+            <!-- Mode selector -->
+            <div class="sb-section">
+                <span class="sb-label">MODE</span>
+                <div class="mode-btns" id="mode-btns">
+                    <button class="mode-btn active" data-mode="cpu">
+                        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round">
+                            <rect x="3" y="3" width="12" height="12" rx="2" />
+                            <circle cx="7.5" cy="9" r="1.2" />
+                            <circle cx="10.5" cy="9" r="1.2" />
+                        </svg>
+                        vs CPU
+                    </button>
+                    <button class="mode-btn" data-mode="local">
+                        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round">
+                            <circle cx="6.5" cy="6" r="2.5" />
+                            <circle cx="11.5" cy="6" r="2.5" />
+                            <path d="M1 16c0-3 2.5-5 5.5-5s5.5 2 5.5 5" />
+                        </svg>
+                        vs Local
+                    </button>
+                    <button class="mode-btn" data-mode="online">
+                        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round">
+                            <circle cx="9" cy="4" r="2.5" />
+                            <path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+                            <path d="M14 2l2 2-2 2" />
+                        </svg>
+                        vs Online
+                    </button>
+                </div>
+            </div>
 
-      <!-- Room panel (online only) -->
-      <div class="sb-section room-panel" id="room-panel" style="display:none;">
-        <span class="sb-label">ROOM</span>
-        <!-- pre-room -->
-        <div class="room-actions" id="room-actions">
-          <button class="room-btn" id="create-room-btn">Create room</button>
-          <div class="room-join-row">
-            <input type="text" id="room-code-input" class="room-input" placeholder="CODE" maxlength="5" autocomplete="off" spellcheck="false">
-            <button class="room-btn room-btn--sm" id="join-room-btn">Join</button>
-          </div>
-        </div>
-        <!-- in-room -->
-        <div class="room-active" id="room-active" style="display:none;">
-          <div class="room-code-row">
-            <span class="room-code" id="room-code-val"></span>
-            <button class="room-copy" id="copy-code-btn" title="Copy">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="5" y="5" width="8" height="8" rx="1.5"/><path d="M3 11V3h8"/></svg>
-            </button>
-          </div>
-          <span class="room-status" id="room-status">Waiting for opponent...</span>
-          <button class="room-leave" id="leave-room-btn">Leave</button>
-        </div>
-      </div>
+            <!-- Room panel (online only) -->
+            <div class="sb-section room-panel" id="room-panel" style="display:none;">
+                <span class="sb-label">ROOM</span>
+                <!-- pre-room -->
+                <div class="room-actions" id="room-actions">
+                    <button class="room-btn" id="create-room-btn">Create room</button>
+                    <div class="room-join-row">
+                        <input type="text" id="room-code-input" class="room-input" placeholder="CODE" maxlength="5"
+                            autocomplete="off" spellcheck="false">
+                        <button class="room-btn room-btn--sm" id="join-room-btn">Join</button>
+                    </div>
+                </div>
+                <!-- in-room -->
+                <div class="room-active" id="room-active" style="display:none;">
+                    <div class="room-code-row">
+                        <span class="room-code" id="room-code-val"></span>
+                        <button class="room-copy" id="copy-code-btn" title="Copy">
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"
+                                stroke-linecap="round">
+                                <rect x="5" y="5" width="8" height="8" rx="1.5" />
+                                <path d="M3 11V3h8" />
+                            </svg>
+                        </button>
+                    </div>
+                    <span class="room-status" id="room-status">Waiting for opponent...</span>
+                    <button class="room-leave" id="leave-room-btn">Leave</button>
+                </div>
+            </div>
 
-      <!-- Scoreboard -->
-      <div class="sb-section">
-        <span class="sb-label">SCOREBOARD</span>
-        <div class="score-grid">
-          <div class="score-card" id="sc-p1">
-            <span class="sc-name" id="p1-name">You</span>
-            <span class="sc-mark sc-mark-x" id="p1-mark">X</span>
-            <span class="sc-val" id="p1-score">0</span>
-          </div>
-          <span class="score-vs">vs</span>
-          <div class="score-card" id="sc-p2">
-            <span class="sc-name" id="p2-name">CPU</span>
-            <span class="sc-mark sc-mark-o" id="p2-mark">O</span>
-            <span class="sc-val" id="p2-score">0</span>
-          </div>
-        </div>
-        <div class="draws-row">
-          <span class="draws-lbl">Draws</span>
-          <span class="draws-val" id="draws-val">0</span>
-        </div>
-      </div>
+            <!-- Scoreboard -->
+            <div class="sb-section">
+                <span class="sb-label">SCOREBOARD</span>
+                <div class="score-grid">
+                    <div class="score-card" id="sc-p1">
+                        <span class="sc-name" id="p1-name">You</span>
+                        <span class="sc-mark sc-mark-x" id="p1-mark">X</span>
+                        <span class="sc-val" id="p1-score">0</span>
+                    </div>
+                    <span class="score-vs">vs</span>
+                    <div class="score-card" id="sc-p2">
+                        <span class="sc-name" id="p2-name">CPU</span>
+                        <span class="sc-mark sc-mark-o" id="p2-mark">O</span>
+                        <span class="sc-val" id="p2-score">0</span>
+                    </div>
+                </div>
+                <div class="draws-row">
+                    <span class="draws-lbl">Draws</span>
+                    <span class="draws-val" id="draws-val">0</span>
+                </div>
+            </div>
 
-      <!-- Move log -->
-      <div class="sb-section sb-section--grow">
-        <span class="sb-label">MOVES</span>
-        <div class="move-log" id="move-log">
-          <span class="log-empty" id="log-empty">No moves yet</span>
-        </div>
-      </div>
+            <!-- Move log -->
+            <div class="sb-section sb-section--grow">
+                <span class="sb-label">MOVES</span>
+                <div class="move-log" id="move-log">
+                    <span class="log-empty" id="log-empty">No moves yet</span>
+                </div>
+            </div>
 
-      <!-- Sidebar footer -->
-      <div class="sb-foot">
-        <span class="credit">made with <span class="heart">&hearts;</span> by Bhavy Upreti</span>
-      </div>
-    </aside>
+            <!-- Sidebar footer -->
+            <div class="sb-foot">
+                <span class="credit">Made with <span class="heart">&hearts;</span> by Bhavy Upreti</span>
+            </div>
+        </aside>
 
-    <!-- ═══ ARENA ═══ -->
-    <main class="arena">
+        <!-- ═══ ARENA ═══ -->
+        <main class="arena">
+            <span class="ac ac-tl"></span>
+            <span class="ac ac-tr"></span>
+            <span class="ac ac-bl"></span>
+            <span class="ac ac-br"></span>
 
-      <!-- Status -->
-      <div class="status-bar">
-        <p class="status-text" id="status-text">Choose your mark</p>
-      </div>
+            <!-- Status -->
+            <div class="status-bar">
+                <p class="status-text" id="status-text">Choose your mark</p>
+            </div>
 
-      <!-- Pick screen (cpu mode only) -->
-      <div class="pick-screen" id="pick-screen">
-        <p class="pick-title">Play as</p>
-        <div class="pick-options">
-          <button class="pick-btn pick-x" id="pick-x" aria-label="Play as X">
-            <svg class="pick-svg" viewBox="0 0 60 60">
-              <line x1="14" y1="14" x2="46" y2="46" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-              <line x1="46" y1="14" x2="14" y2="46" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-            </svg>
-            <span class="pick-mark">X</span>
-            <span class="pick-sub">Goes first</span>
-          </button>
-          <button class="pick-btn pick-o" id="pick-o" aria-label="Play as O">
-            <svg class="pick-svg" viewBox="0 0 60 60">
-              <circle cx="30" cy="30" r="18" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-            </svg>
-            <span class="pick-mark">O</span>
-            <span class="pick-sub">Goes second</span>
-          </button>
-        </div>
-      </div>
+            <!-- Pick screen (cpu mode only) -->
+            <div class="pick-screen" id="pick-screen">
+                <p class="pick-title">Play as</p>
+                <div class="pick-options">
+                    <button class="pick-btn pick-x" id="pick-x" aria-label="Play as X">
+                        <svg class="pick-svg" viewBox="0 0 60 60">
+                            <line x1="14" y1="14" x2="46" y2="46" stroke="currentColor" stroke-width="5"
+                                stroke-linecap="round" />
+                            <line x1="46" y1="14" x2="14" y2="46" stroke="currentColor" stroke-width="5"
+                                stroke-linecap="round" />
+                        </svg>
+                        <span class="pick-mark">X</span>
+                        <span class="pick-sub">Goes first</span>
+                    </button>
+                    <button class="pick-btn pick-o" id="pick-o" aria-label="Play as O">
+                        <svg class="pick-svg" viewBox="0 0 60 60">
+                            <circle cx="30" cy="30" r="18" fill="none" stroke="currentColor" stroke-width="5"
+                                stroke-linecap="round" />
+                        </svg>
+                        <span class="pick-mark">O</span>
+                        <span class="pick-sub">Goes second</span>
+                    </button>
+                </div>
+            </div>
 
-      <!-- Board -->
-      <div class="board-wrap" id="board-wrap" style="display:none;">
-        <div class="board" id="board">
-          <button class="cell" data-i="0"><div class="cell-inner"></div></button>
-          <button class="cell" data-i="1"><div class="cell-inner"></div></button>
-          <button class="cell" data-i="2"><div class="cell-inner"></div></button>
-          <button class="cell" data-i="3"><div class="cell-inner"></div></button>
-          <button class="cell" data-i="4"><div class="cell-inner"></div></button>
-          <button class="cell" data-i="5"><div class="cell-inner"></div></button>
-          <button class="cell" data-i="6"><div class="cell-inner"></div></button>
-          <button class="cell" data-i="7"><div class="cell-inner"></div></button>
-          <button class="cell" data-i="8"><div class="cell-inner"></div></button>
-          <svg class="win-line" id="win-line" viewBox="0 0 300 300">
-            <line id="win-stroke" x1="0" y1="0" x2="0" y2="0"
-                  stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity="0"/>
-          </svg>
-        </div>
-      </div>
+            <!-- Board -->
+            <div class="board-wrap" id="board-wrap" style="display:none;">
+                <div class="board" id="board">
+                    <button class="cell" data-i="0">
+                        <div class="cell-inner"></div>
+                    </button>
+                    <button class="cell" data-i="1">
+                        <div class="cell-inner"></div>
+                    </button>
+                    <button class="cell" data-i="2">
+                        <div class="cell-inner"></div>
+                    </button>
+                    <button class="cell" data-i="3">
+                        <div class="cell-inner"></div>
+                    </button>
+                    <button class="cell" data-i="4">
+                        <div class="cell-inner"></div>
+                    </button>
+                    <button class="cell" data-i="5">
+                        <div class="cell-inner"></div>
+                    </button>
+                    <button class="cell" data-i="6">
+                        <div class="cell-inner"></div>
+                    </button>
+                    <button class="cell" data-i="7">
+                        <div class="cell-inner"></div>
+                    </button>
+                    <button class="cell" data-i="8">
+                        <div class="cell-inner"></div>
+                    </button>
+                    <svg class="win-line" id="win-line" viewBox="0 0 300 300">
+                        <line id="win-stroke" x1="0" y1="0" x2="0" y2="0" stroke="currentColor" stroke-width="4"
+                            stroke-linecap="round" opacity="0" />
+                    </svg>
+                </div>
+            </div>
 
-      <!-- Controls -->
-      <div class="controls">
-        <button class="ctrl-btn" id="new-game-btn">New game</button>
-        <button class="ctrl-btn ctrl-ghost" id="reset-btn">Reset scores</button>
-      </div>
-    </main>
+            <!-- Controls -->
+            <div class="controls">
+                <button class="ctrl-btn" id="new-game-btn">New game</button>
+                <button class="ctrl-btn ctrl-ghost" id="reset-btn">Reset scores</button>
+            </div>
+        </main>
 
-  </div>
+    </div>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script>window.io || document.write('<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"><\/script>')</script>
-  <script src="script.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>window.io || document.write('<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"><\/script>')</script>
+    <script src="script.js"></script>
 </body>
+
 </html>
