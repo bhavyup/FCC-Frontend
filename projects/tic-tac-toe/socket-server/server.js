@@ -11,7 +11,8 @@ const PORT = process.env.PORT || 4000;
 
 /* ── Allowed origins (GitHub Pages + local dev) ─────────── */
 const ALLOWED_ORIGINS = [
-  'https://bhavyup.github.io',         // ← change to your GitHub Pages URL
+  'https://bhavyup.github.io',
+  'https://bhavyupreti.me',         // ← change to your GitHub Pages URL
   'http://localhost:3000',
   'http://127.0.0.1:3000'
 ];
